@@ -1,0 +1,5 @@
+?package(karlyriceditor): \
+  needs="X11" \
+  section="Applications/Video" \
+  title="Karlyriceditor" \
+  command="/usr/bin/karlyriceditor"

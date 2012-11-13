@@ -1,0 +1,3 @@
+include-libavutil-mathematics
+install
+remove-openssl-dependency

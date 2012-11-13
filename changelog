@@ -1,0 +1,13 @@
+karlyriceditor (1.3-1) unstable; urgency=low
+
+  * Initial release (Closes: #692968)
+  * Added a man page (automatically created from sgml file), copyright
+    specification and watch file
+  * debian/patches/include-libavutil-mathematics
+    - Fix compilation error: Add missing includes for libavutil
+  * debian/patches/install
+    - Add support for "install" target in Makefile
+  * debian/patches/remove-openssl-dependency
+    - License incompatibilities: Get rid of linkage against OpenSSL
+
+ -- Martin Steghöfer <martin@steghoefer.eu>  Tue, 13 Nov 2012 23:10:14 +0100

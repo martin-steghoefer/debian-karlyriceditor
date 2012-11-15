@@ -9,5 +9,7 @@ karlyriceditor (1.3-1) unstable; urgency=low
     - Add support for "install" target in Makefile
   * debian/patches/remove-openssl-dependency
     - License incompatibilities: Get rid of linkage against OpenSSL
+  * debian/patches/qprintable-crash
+    - Fix crash on Debian wheezy
 
- -- Martin Steghöfer <martin@steghoefer.eu>  Tue, 13 Nov 2012 23:10:14 +0100
+ -- Martin Steghöfer <martin@steghoefer.eu>  Thu, 15 Nov 2012 21:47:52 +0100

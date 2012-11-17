@@ -11,5 +11,9 @@ karlyriceditor (1.3-1) unstable; urgency=low
     - License incompatibilities: Get rid of linkage against OpenSSL
   * debian/patches/qprintable-crash
     - Fix crash on Debian wheezy
+  * Converted image src/images/application_icon.png into adequate formats
+    for freedesktop.org and Debian Menu.
+  * debian/patches/desktop
+    - Improve freedesktop.org configuration file
 
- -- Martin Steghöfer <martin@steghoefer.eu>  Thu, 15 Nov 2012 21:47:52 +0100
+ -- Martin Steghöfer <martin@steghoefer.eu>  Sat, 17 Nov 2012 23:01:07 +0100

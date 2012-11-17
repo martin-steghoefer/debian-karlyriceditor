@@ -2,4 +2,7 @@
   needs="X11" \
   section="Applications/Video" \
   title="Karlyriceditor" \
-  command="/usr/bin/karlyriceditor"
+  command="/usr/bin/karlyriceditor" \
+  icon="karlyriceditor.xpm" \
+  icon16x16="karlyriceditor16.xpm" \
+  icon32x32="karlyriceditor32.xpm"

@@ -1,0 +1,5 @@
+packages/karlyriceditor.desktop /usr/share/applications
+debian/karlyriceditor.xpm       /usr/share/pixmaps
+debian/karlyriceditor16.xpm     /usr/share/pixmaps
+debian/karlyriceditor32.xpm     /usr/share/pixmaps
+debian/karlyriceditor.png       /usr/share/pixmaps

@@ -1,5 +1,5 @@
-include-libavutil-mathematics
-install
-remove-openssl-dependency
-desktop
-qprintable-crash
+include-libavutil-mathematics.patch
+install.patch
+remove-openssl-dependency.patch
+desktop.patch
+qprintable-crash.patch

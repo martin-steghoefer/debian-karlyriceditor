@@ -3,17 +3,17 @@ karlyriceditor (1.3-1) unstable; urgency=low
   * Initial release (Closes: #692968)
   * Added a man page (automatically created from sgml file), copyright
     specification and watch file
-  * debian/patches/include-libavutil-mathematics
+  * debian/patches/include-libavutil-mathematics.patch
     - Fix compilation error: Add missing includes for libavutil
-  * debian/patches/install
+  * debian/patches/install.patch
     - Add support for "install" target in Makefile
-  * debian/patches/remove-openssl-dependency
+  * debian/patches/remove-openssl-dependency.patch
     - License incompatibilities: Get rid of linkage against OpenSSL
-  * debian/patches/qprintable-crash
+  * debian/patches/qprintable-crash.patch
     - Fix crash on Debian wheezy
   * Converted image src/images/application_icon.png into adequate formats
     for freedesktop.org and Debian Menu.
-  * debian/patches/desktop
+  * debian/patches/desktop.patch
     - Improve freedesktop.org configuration file
 
- -- Martin Steghöfer <martin@steghoefer.eu>  Sat, 17 Nov 2012 23:01:07 +0100
+ -- Martin Steghöfer <martin@steghoefer.eu>  Sat, 17 Nov 2012 23:18:01 +0100

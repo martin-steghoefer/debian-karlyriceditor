@@ -3,3 +3,4 @@ install.patch
 remove-openssl-dependency.patch
 desktop.patch
 qprintable-crash.patch
+spelling.patch

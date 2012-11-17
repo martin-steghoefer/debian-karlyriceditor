@@ -15,5 +15,7 @@ karlyriceditor (1.3-1) unstable; urgency=low
     for freedesktop.org and Debian Menu.
   * debian/patches/desktop.patch
     - Improve freedesktop.org configuration file
+  * debian/patches/spelling.patch
+    - Spelling error in the source code detected by lintian
 
- -- Martin Steghöfer <martin@steghoefer.eu>  Sat, 17 Nov 2012 23:18:01 +0100
+ -- Martin Steghöfer <martin@steghoefer.eu>  Sun, 18 Nov 2012 00:12:51 +0100

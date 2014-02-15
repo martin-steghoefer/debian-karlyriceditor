@@ -8,15 +8,14 @@ Description: Get rid of linkage against OpenSSL
 Author: Martin Steghöfer <martin@steghoefer.eu>
 Forwarded: not-needed
 
---- karlyriceditor-1.3.orig/src/src.pro
-+++ karlyriceditor-1.3/src/src.pro
-@@ -1,8 +1,7 @@
+--- a/src/src.pro
++++ b/src/src.pro
+@@ -1,8 +1,6 @@
  TEMPLATE = app
  TARGET = ../bin/karlyriceditor
  DEPENDPATH += .
--LIBS += -lavformat -lavcodec -lswscale -lavutil -lSDL -lcrypto
+-LIBS += -lcrypto
 -DEFINES += USE_LICENSING
-+LIBS += -lavformat -lavcodec -lswscale -lavutil -lSDL
+ CONFIG += link_pkgconfig
+ PKGCONFIG += libavformat libavcodec libswscale  libavresample libavutil sdl
  
- win32-g++-cross: {
- 	LIBS += -lwsock32 -lvorbis -lvorbisenc -ltheora -lmp3lame -logg -lx264 -lxvidcore -lbz2 -ldxguid

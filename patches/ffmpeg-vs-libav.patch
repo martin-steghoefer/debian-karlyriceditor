@@ -1,0 +1,41 @@
+Description: Translate FFmpeg calls to Libav-compatible calls
+ The upstream developers compile Karlyriceditor against FFmpeg, but in Debian
+ there is only Libav available, whose API is slowly drifting away from
+ FFmpeg's. This patch adapts the code to 2 of those differences.
+ Firstly the second parameters of "avformat_new_stream" is of non-const pointer
+ type, but the code tries to pass a const pointer to it.
+ Secondly there is no AV_ROUND_PASS_MINMAX flag for the rounding parameter of
+ av_rescale_q_rnd in Libav.
+Author: Martin Steghöfer <martin@steghoefer.eu>
+Forwarded: not-needed
+
+--- a/src/ffmpegvideoencoder.cpp
++++ b/src/ffmpegvideoencoder.cpp
+@@ -383,7 +383,11 @@
+ 	}
+ 
+ 	// Create the video stream, index
+-	videoStream = avformat_new_stream( outputFormatCtx, videoCodecCtx->codec );
++	// Use a block to keep the helper variable "codec" local to avoid conflict with gotos
++	{
++	    AVCodec codec = *videoCodecCtx->codec;
++	    videoStream = avformat_new_stream( outputFormatCtx, &codec );
++	}
+ 
+ 	if ( !videoStream )
+ 	{
+@@ -753,8 +757,12 @@
+ 					pkt.flags |= AV_PKT_FLAG_KEY;
+ 
+ 					// Rescale output packet timestamp values from codec to stream timebase
+-					pkt.pts = av_rescale_q_rnd( pkt.pts, audioCodecCtx->time_base, audioStream->time_base, (AVRounding) (AV_ROUND_NEAR_INF|AV_ROUND_PASS_MINMAX) );
+-					pkt.dts = av_rescale_q_rnd( pkt.dts, audioCodecCtx->time_base, audioStream->time_base, (AVRounding) (AV_ROUND_NEAR_INF|AV_ROUND_PASS_MINMAX) );
++					if ( pkt.pts != AV_NOPTS_VALUE ) {
++					    pkt.pts = av_rescale_q_rnd( pkt.pts, audioCodecCtx->time_base, audioStream->time_base, AV_ROUND_NEAR_INF );
++					}
++					if ( pkt.dts != AV_NOPTS_VALUE ) {
++					    pkt.dts = av_rescale_q_rnd( pkt.dts, audioCodecCtx->time_base, audioStream->time_base, AV_ROUND_NEAR_INF );
++					}
+ 					pkt.duration = av_rescale_q( pkt.duration, audioCodecCtx->time_base, audioStream->time_base);
+ 
+ 					// And write the file

@@ -1,10 +1,17 @@
 Description: Get rid of linkage against OpenSSL
- The licenses of this package (GPL) and the one of OpenSSL are incompatible
- according to Debian's position. So we get rid of the module "licensing" that
- links against OpenSSL. It's not useful for free software anyway: If the user
- has got a valid license installed, a line giving credit to the karlyriceditor
- program is no longer shown in the rendered videos. Besides, it doesn't become
- clear, how such a "license" could be obtained.
+ The licenses of this software (GPL) and the one of OpenSSL are incompatible
+ according to Debian's position. OpenSSL is used in 2 places:
+ The first one is a module called "licensing" that can be deactivated using
+ a preprocessor definition. The module doesn't seem suitable for free software
+ anyway. It removes a line giving credit to the karlyriceditor program from
+ the rendered videos, if a valid license is installed. However, it doesn't
+ become clear, how such a "license" could be obtained. Besides, the software is
+ licensed under the GPL, so every user is able and allowed to remove the credit
+ line anyway.
+ The second place is a reader for the "Karafun" file format. Its decryption
+ functionality, which uses OpenSSL, can be deactivated via a preprocessor
+ definition. The reader then supports only unencrypted files and will give an
+ error message, when trying to load encrypted files.
 Author: Martin Steghöfer <martin@steghoefer.eu>
 Forwarded: not-needed
 
@@ -19,3 +26,14 @@ Forwarded: not-needed
  CONFIG += link_pkgconfig
  PKGCONFIG += libavformat libavcodec libswscale  libavresample libavutil sdl
  
+--- a/src/kfn_file_parser.cpp
++++ b/src/kfn_file_parser.cpp
+@@ -23,8 +23,6 @@
+ #include <QRegExp>
+ #include <QStringList>
+ 
+-#define KFN_SUPPORT_ENCRYPTION
+-
+ #if defined (KFN_SUPPORT_ENCRYPTION)
+ 	#include <openssl/evp.h>
+ #endif

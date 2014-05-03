@@ -14,8 +14,22 @@ export CFLAGS:=$(shell dpkg-buildflags --get CFLAGS)
 export CXXFLAGS:=$(shell dpkg-buildflags --get CXXFLAGS)
 export LDFLAGS:=$(shell dpkg-buildflags --get LDFLAGS)
 
+# Use qt4's qmake executable
+export QMAKE:="qmake-qt4"
+
+
 %:
 	dh $@ 
+
+
+# We call qmake explicitly (instead of letting dh do the work) in
+# order to make sure we use the qmake binary specified in $(QMAKE)
+override_dh_auto_configure: Makefile
+
+Makefile:
+	$(QMAKE)
+	$(MAKE) qmake
+
 
 MANPAGES := debian/karlyriceditor.1
 

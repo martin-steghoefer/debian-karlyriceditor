@@ -9,7 +9,7 @@ Forwarded: not-needed
 
 --- a/packages/karlyriceditor.desktop
 +++ b/packages/karlyriceditor.desktop
-@@ -1,8 +1,7 @@
+@@ -1,8 +1,8 @@
  [Desktop Entry]
  Type=Application
  Terminal=false
@@ -20,3 +20,4 @@ Forwarded: not-needed
 -Icon=/usr/share/pixmaps/karlyriceditor.png
 +Icon=karlyriceditor
  Exec=karlyriceditor
++Keywords=Lyrics;Subtitles;Music

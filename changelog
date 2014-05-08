@@ -12,8 +12,11 @@ karlyriceditor (1.11-1) unstable; urgency=low
   * debian/rules
     - Make sure that we compile against Qt4, even if Qt5 is installed and set
       as preferred version via update-alternatives.
+  * debian/control
+    - Update dependencies of binary package to the versions of libav* that are
+      currently available in "unstable"
 
- -- Martin Steghöfer <martin@steghoefer.eu>  Sat, 03 May 2014 16:25:31 +0200
+ -- Martin Steghöfer <martin@steghoefer.eu>  Thu, 08 May 2014 19:42:15 +0200
 
 karlyriceditor (1.3-1) unstable; urgency=low
 

@@ -8,7 +8,7 @@ Homepage: http://sourceforge.net/projects/karlyriceditor/
 
 Package: karlyriceditor
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libavformat53, libavcodec53, libswscale2, libavutil51, libavresample1, libsdl1.2debian, libqtgui4
+Depends: ${shlibs:Depends}, ${misc:Depends}, libavformat54, libavcodec54, libswscale2, libavutil52, libavresample1, libsdl1.2debian, libqtgui4
 Description: karaoke lyrics editor
  A Qt-based GUI application to edit and test Karaoke lyrics in popular formats.
  Features full support for non-English languages, support for CDG, LRC and

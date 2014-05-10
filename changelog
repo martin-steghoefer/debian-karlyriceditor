@@ -23,6 +23,9 @@ karlyriceditor (1.11-1) unstable; urgency=low
   * debian/patches/desktop.patch
     - Added "Keywords" entry to get rid of lintian warning
       desktop-entry-lacks-keywords-entry
+    - Use "Name" and "GenericName" in a way complying to freedesktop.org
+      standards:
+      http://standards.freedesktop.org/desktop-entry-spec/latest/ar01s05.html
   * Added opaque background to icons in png and xpm format for better
     visual clarity
   * debian/patches/ffmpeg-vs-libav-avframe-allocation.patch
@@ -33,7 +36,7 @@ karlyriceditor (1.11-1) unstable; urgency=low
       AVStream (has to be the same as the one of the codec in Libav,
       upstream uses FFmpeg)
 
- -- Martin Steghöfer <martin@steghoefer.eu>  Sat, 10 May 2014 13:52:19 +0200
+ -- Martin Steghöfer <martin@steghoefer.eu>  Sat, 10 May 2014 14:43:54 +0200
 
 karlyriceditor (1.3-1) unstable; urgency=low
 

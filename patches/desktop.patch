@@ -4,20 +4,25 @@ Description: Improve freedesktop.org configuration file
  2. Icons should better be given without full path. This way the desktop
  manager can support icon themes.
  3. Removed no longer necessary encoding specification (now it's always UTF-8).
+ 4. Added categories
+ 5. Use "Name" and "GenericName" in the way defined by freedesktop.org:
+ http://standards.freedesktop.org/desktop-entry-spec/latest/ar01s05.html
 Author: Martin Steghöfer <martin@steghoefer.eu>
 Forwarded: not-needed
 
 --- a/packages/karlyriceditor.desktop
 +++ b/packages/karlyriceditor.desktop
-@@ -1,8 +1,8 @@
+@@ -1,8 +1,9 @@
  [Desktop Entry]
  Type=Application
  Terminal=false
 -Categories=Multimedia;Karaoke
-+Categories=AudioVideo;Video
- Name=Karaoke Lyric Editor
+-Name=Karaoke Lyric Editor
 -Encoding=UTF-8
 -Icon=/usr/share/pixmaps/karlyriceditor.png
++Categories=AudioVideo;Video
++Name=karlyriceditor
++GenericName=Karaoke Lyric Editor
 +Icon=karlyriceditor
  Exec=karlyriceditor
 +Keywords=Lyrics;Subtitles;Music

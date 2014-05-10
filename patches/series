@@ -6,3 +6,4 @@ qprintable-crash.patch
 spelling.patch
 ffmpeg-vs-libav-compilation.patch
 ffmpeg-vs-libav-avframe-allocation.patch
+ffmpeg-vs-libav-aspect-ratio.patch

@@ -1,0 +1,19 @@
+Description: Fix fp exception due to unset sample aspect ratio (Libav/FFmpeg)
+ The upstream developers compile Karlyriceditor against FFmpeg, but in Debian
+ there is only Libav available, whose API is slowly drifting away from
+ FFmpeg's. This patch adapts the code to one of those differences.
+ In Libav sample aspect ratio of a AVStream object is not automatically
+ initialized to the one of its codec. So this has to be done manually.
+Author: Martin Steghöfer <martin@steghoefer.eu>
+Forwarded: not-needed
+
+--- karlyriceditor-1.11.orig/src/ffmpegvideoencoder.cpp
++++ karlyriceditor-1.11/src/ffmpegvideoencoder.cpp
+@@ -399,6 +399,7 @@ av_log_set_level(AV_LOG_VERBOSE);
+ 	videoStream->codec = videoCodecCtx;
+ 
+ 	// Set the video stream timebase if not set
++	videoStream->sample_aspect_ratio = videoCodecCtx->sample_aspect_ratio;
+ 	if ( videoStream->time_base.den == 0 )
+ 		videoStream->time_base = videoCodecCtx->time_base;
+ 

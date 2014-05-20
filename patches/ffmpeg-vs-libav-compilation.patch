@@ -9,6 +9,7 @@ Description: Translate FFmpeg calls to Libav-compatible calls
  * The member r_frame_rate is no longer present in AVStream. The recommended
    replacement is avg_frame_rate.
  * The enums CODEC_ID_MP3 and CODEC_ID_AC3 have been prefixed with AV_.
+ * The function avcodec_alloc_frame is deprecated in favor of av_frame_alloc.
 Author: Martin Steghöfer <martin@steghoefer.eu>
 Forwarded: not-needed
 
@@ -49,6 +50,15 @@ Forwarded: not-needed
  				audioCodec = avcodec_find_encoder_by_name( "ac3_fixed" );
  
  			// Allocate the audio context
+@@ -544,7 +548,7 @@
+ 				goto cleanup;
+ 			}
+ 
+-			audioFrame = avcodec_alloc_frame();
++			audioFrame = av_frame_alloc();
+ 
+ 			if ( !audioFrame )
+ 			{
 @@ -573,10 +577,10 @@
  				goto cleanup;
  			}
@@ -62,6 +72,15 @@ Forwarded: not-needed
  				audioStream->codec->block_align= 0;
  		}
  
+@@ -595,7 +599,7 @@
+ 	}
+ 
+ 	// Allocate the YUV frame
+-	videoFrame = avcodec_alloc_frame();
++	videoFrame = av_frame_alloc();
+ 
+ 	if ( !videoFrame )
+ 	{
 @@ -753,8 +757,12 @@
  					pkt.flags |= AV_PKT_FLAG_KEY;
  
@@ -90,3 +109,27 @@ Forwarded: not-needed
  
  	if ( d->m_fps_den == 60000 )
  		d->m_fps_den = 30000;
+@@ -139,10 +139,10 @@
+ 	}
+ 
+ 	// Allocate video frame
+-	d->pFrame = avcodec_alloc_frame();
++	d->pFrame = av_frame_alloc();
+ 
+ 	// Allocate an AVFrame structure
+-	d->pFrameRGB = avcodec_alloc_frame();
++	d->pFrameRGB = av_frame_alloc();
+ 
+ 	if ( !d->pFrame || !d->pFrameRGB )
+ 	{
+--- a/src/audioplayerprivate.cpp
++++ b/src/audioplayerprivate.cpp
+@@ -227,7 +227,7 @@
+ 	}
+ 
+ 	// Allocate the buffer
+-	m_frame = avcodec_alloc_frame();
++	m_frame = av_frame_alloc();
+ 
+ 	if ( !m_frame )
+ 	{

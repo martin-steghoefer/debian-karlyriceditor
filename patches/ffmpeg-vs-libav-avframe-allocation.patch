@@ -21,7 +21,7 @@ Forwarded: not-needed
  			// Initialize the frame
 -			AVFrame srcaudio;
 -			avcodec_get_frame_defaults( &srcaudio );
-+			AVFrame *srcaudio = avcodec_alloc_frame();
++			AVFrame *srcaudio = av_frame_alloc();
  
  			// Decode the original audio into the srcaudio frame
  			int got_audio;

@@ -12,7 +12,8 @@ Package: karlyriceditor
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, libavformat54, libavcodec54, libswscale2, libavutil52, libavresample1, libsdl1.2debian, libqtgui4
 Description: karaoke lyrics editor
- A Qt-based GUI application to edit and test Karaoke lyrics in popular formats.
- Features full support for non-English languages, support for CDG, LRC and
- UltraStar specifics, built-in karaoke testing window and Karaoke video
- rendering.
+ A Qt-based GUI application to edit, synchronize and render karaoke lyrics in
+ popular formats, including CD+G, LRC, KaraFun, PowerKaraoke and UltraStar.
+ Features full support for non-English languages, built-in karaoke testing
+ window and Karaoke video rendering. Supports changing image and video
+ backgrounds for video rendering and export.

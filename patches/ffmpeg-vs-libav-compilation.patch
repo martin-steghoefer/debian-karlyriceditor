@@ -1,11 +1,14 @@
 Description: Translate FFmpeg calls to Libav-compatible calls
  The upstream developers compile Karlyriceditor against FFmpeg, but in Debian
  there is only Libav available, whose API is slowly drifting away from
- FFmpeg's. This patch adapts the code to 2 of those differences.
- Firstly the second parameters of "avformat_new_stream" is of non-const pointer
- type, but the code tries to pass a const pointer to it.
- Secondly there is no AV_ROUND_PASS_MINMAX flag for the rounding parameter of
- av_rescale_q_rnd in Libav.
+ FFmpeg's. This patch adapts the code to several of those differences:
+ * The second parameters of "avformat_new_stream" is of non-const pointer
+   type, but the code tries to pass a const pointer to it.
+ * There is no AV_ROUND_PASS_MINMAX flag for the rounding parameter of
+   av_rescale_q_rnd in Libav.
+ * The member r_frame_rate is no longer present in AVStream. The recommended
+   replacement is avg_frame_rate.
+ * The enums CODEC_ID_MP3 and CODEC_ID_AC3 have been prefixed with AV_.
 Author: Martin Steghöfer <martin@steghoefer.eu>
 Forwarded: not-needed
 
@@ -24,6 +27,41 @@ Forwarded: not-needed
  
  	if ( !videoStream )
  	{
+@@ -425,10 +429,10 @@
+ 			// We're copying the stream
+ 			memcpy( newCtx, m_aplayer->aCodecCtx, sizeof(AVCodecContext) );
+ 
+-			if ( newCtx->block_align == 1 && newCtx->codec_id == CODEC_ID_MP3 )
++			if ( newCtx->block_align == 1 && newCtx->codec_id == AV_CODEC_ID_MP3 )
+ 				newCtx->block_align= 0;
+ 
+-			if ( newCtx->codec_id == CODEC_ID_AC3 )
++			if ( newCtx->codec_id == AV_CODEC_ID_AC3 )
+ 				newCtx->block_align= 0;
+ 		}
+ 		else
+@@ -443,7 +447,7 @@
+ 			}
+ 
+ 			// Hack to use the fixed AC3 codec if available
+-			if ( audioCodec->id == CODEC_ID_AC3 && avcodec_find_encoder_by_name( "ac3_fixed" ) )
++			if ( audioCodec->id == AV_CODEC_ID_AC3 && avcodec_find_encoder_by_name( "ac3_fixed" ) )
+ 				audioCodec = avcodec_find_encoder_by_name( "ac3_fixed" );
+ 
+ 			// Allocate the audio context
+@@ -573,10 +577,10 @@
+ 				goto cleanup;
+ 			}
+ 
+-			if ( audioStream->codec->block_align == 1 && audioStream->codec->codec_id == CODEC_ID_MP3 )
++			if ( audioStream->codec->block_align == 1 && audioStream->codec->codec_id == AV_CODEC_ID_MP3 )
+ 				audioStream->codec->block_align= 0;
+ 
+-			if ( audioStream->codec->codec_id == CODEC_ID_AC3 )
++			if ( audioStream->codec->codec_id == AV_CODEC_ID_AC3 )
+ 				audioStream->codec->block_align= 0;
+ 		}
+ 
 @@ -753,8 +757,12 @@
  					pkt.flags |= AV_PKT_FLAG_KEY;
  
@@ -39,3 +77,16 @@ Forwarded: not-needed
  					pkt.duration = av_rescale_q( pkt.duration, audioCodecCtx->time_base, audioStream->time_base);
  
  					// And write the file
+--- a/src/ffmpegvideodecoder.cpp
++++ b/src/ffmpegvideodecoder.cpp
+@@ -113,8 +113,8 @@
+ 	if ( d->videoStream == -1 )
+ 		return false; // Didn't find a video stream
+ 
+-	d->m_fps_den = d->pFormatCtx->streams[d->videoStream]->r_frame_rate.den;
+-	d->m_fps_num = d->pFormatCtx->streams[d->videoStream]->r_frame_rate.num;
++	d->m_fps_den = d->pFormatCtx->streams[d->videoStream]->avg_frame_rate.den;
++	d->m_fps_num = d->pFormatCtx->streams[d->videoStream]->avg_frame_rate.num;
+ 
+ 	if ( d->m_fps_den == 60000 )
+ 		d->m_fps_den = 30000;

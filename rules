@@ -22,12 +22,6 @@ export QMAKE:="qmake-qt4"
 	dh $@ 
 
 
-# Documentation: Have to use file name changelog[.gz] (lower case) in Debian
-override_dh_installdocs:
-	dh_installdocs
-	cd debian/karlyriceditor/usr/share/doc/karlyriceditor && mv Changelog changelog
-
-
 # We call qmake explicitly (instead of letting dh do the work) in
 # order to make sure we use the qmake binary specified in $(QMAKE)
 override_dh_auto_configure: Makefile

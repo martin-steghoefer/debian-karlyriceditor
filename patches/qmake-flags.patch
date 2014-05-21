@@ -1,0 +1,17 @@
+Description: Make sure that qmake respects external build/linking flags
+ QMake doesn't respect external build/linking flags that are specified in
+ environment variables. Added QMake code to read those environment variables
+ explicitly and pass them on to the QMake build system.
+Author: Martin Steghöfer <martin@steghoefer.eu>
+Forwarded: not-needed
+
+--- a/src/src.pro
++++ b/src/src.pro
+@@ -119,3 +119,7 @@
+ installbinfiles.files += ../bin/karlyriceditor
+ installbinfiles.path = $$BINDIR
+ INSTALLS += installbinfiles
++
++QMAKE_CXXFLAGS += $$(CXXFLAGS) $$(CPPFLAGS)
++QMAKE_CFLAGS += $$(CFLAGS) $$(CPPFLAGS)
++QMAKE_LFLAGS += $$(LDFLAGS)

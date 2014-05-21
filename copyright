@@ -1,29 +1,29 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Source: http://sourceforge.net/projects/karlyriceditor/files/1.11/karlyriceditor-1.11.tar.gz/download
+Source: http://sourceforge.net/projects/karlyriceditor/files
+
 
 Files: *
-Copyright: 2003-2005 James Klicman <james@klicman.org>
-License: GPL-3
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; version 3 of the License.
- .
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- GNU General Public License for more details.
- .
- You should have received a copy of the GNU General Public License along
- with this program; if not, write to the Free Software Foundation, Inc.,
- Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- .
- On Debian systems, the full text of the GNU General Public
- License version 3 can be found in the file
- `/usr/share/common-licenses/GPL-3'.
+Copyright: 2009-2013, George Yunaev <support@ulduzsoft.com>
+License: GPL-3+
+
+
+Files: src/ffmpegvideoencoder.cpp src/ffmpegvideoencoder.h
+Copyright: 2009-2013, George Yunaev <support@ulduzsoft.com>
+           2009-2010, Daniel Roggen <droggen@gmail.com>
+License: GPL-3+
 
 
 Files: debian/*
-Copyright: 2012 Martin Steghöfer <martin@steghoefer.eu>
+Copyright: 2012-2014, Martin Steghöfer <martin@steghoefer.eu>
+License: GPL-3+
+
+
+Files: debian/karlyriceditor.png debian/karlyriceditor*.xpm
+Copyright: 2009-2013, George Yunaev <support@ulduzsoft.com>
+           2012-2014, Martin Steghöfer <martin@steghoefer.eu>
+License: GPL-3+
+
+
 License: GPL-3+
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -43,23 +43,3 @@ License: GPL-3+
  License version 3 can be found in the file
  `/usr/share/common-licenses/GPL-3'.
 
-
-Files: debian/karlyriceditor.png debian/karlyriceditor*.xpm
-Copyright: 2003-2005 James Klicman <james@klicman.org>
-License: GPL-3
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; version 3 of the License.
- .
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- GNU General Public License for more details.
- .
- You should have received a copy of the GNU General Public License along
- with this program; if not, write to the Free Software Foundation, Inc.,
- Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- .
- On Debian systems, the full text of the GNU General Public
- License version 3 can be found in the file
- `/usr/share/common-licenses/GPL-3'.

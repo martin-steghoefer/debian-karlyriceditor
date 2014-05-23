@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Karaoke Lyrics Editor</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/images/application_icon.png</normaloff>:/images/application_icon.png</iconset>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>true</bool>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="Editor" name="editor" native="true">
+      <property name="whatsThis">
+       <string>Lyrics editor</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionNew_project"/>
+    <addaction name="action_openProject"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionSave_as"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuit"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actionUndo"/>
+    <addaction name="actionRedo"/>
+    <addaction name="separator"/>
+    <addaction name="actionInsert_tag"/>
+    <addaction name="actionRemove_tag"/>
+    <addaction name="actionSplit_current_line"/>
+    <addaction name="separator"/>
+    <addaction name="actionRemove_all_tags"/>
+    <addaction name="separator"/>
+    <addaction name="actionInsert_picture"/>
+    <addaction name="actionInsert_color_change"/>
+    <addaction name="actionInsert_video"/>
+    <addaction name="separator"/>
+    <addaction name="actionClear_text"/>
+    <addaction name="actionTrimspaces"/>
+    <addaction name="separator"/>
+    <addaction name="actionAdd_eol_timing_marks"/>
+    <addaction name="actionTime_adjustment"/>
+   </widget>
+   <widget class="QMenu" name="menuSettings">
+    <property name="title">
+     <string>Settings</string>
+    </property>
+    <addaction name="actionGeneral"/>
+    <addaction name="separator"/>
+    <addaction name="actionShow_Player_dock_wingow"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionRegistration"/>
+    <addaction name="actionAbout"/>
+   </widget>
+   <widget class="QMenu" name="menuProject">
+    <property name="title">
+     <string>Project</string>
+    </property>
+    <addaction name="actionOpen_lyric_file"/>
+    <addaction name="separator"/>
+    <addaction name="actionValidate_lyrics"/>
+    <addaction name="actionView_lyric_file"/>
+    <addaction name="actionTest_lyric_file"/>
+    <addaction name="actionExport_lyric_file"/>
+    <addaction name="separator"/>
+    <addaction name="actionExport_CD_G_file"/>
+    <addaction name="actionTest_CDG_lyrics"/>
+    <addaction name="separator"/>
+    <addaction name="actionExport_video_file"/>
+    <addaction name="separator"/>
+    <addaction name="actionEdit_header_data"/>
+    <addaction name="actionProject_settings"/>
+    <addaction name="separator"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuProject"/>
+   <addaction name="menuSettings"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionOpen_lyric_file">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/dryicons_open_folder.png</normaloff>:/images/dryicons_open_folder.png</iconset>
+   </property>
+   <property name="text">
+    <string>Import lyric file...</string>
+   </property>
+   <property name="toolTip">
+    <string>Imports the lyrics file</string>
+   </property>
+   <property name="whatsThis">
+    <string>Imports the lyrics file in any format, replacing the current content.</string>
+   </property>
+  </action>
+  <action name="actionNew_project">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/dryicons_new.png</normaloff>:/images/dryicons_new.png</iconset>
+   </property>
+   <property name="text">
+    <string>New project...</string>
+   </property>
+   <property name="toolTip">
+    <string>Creates a new project</string>
+   </property>
+   <property name="whatsThis">
+    <string>Closes an existing project (if any), and creates a new one.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save project</string>
+   </property>
+   <property name="toolTip">
+    <string>Saves current project to disk.</string>
+   </property>
+   <property name="whatsThis">
+    <string>Saves current project to disk.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionSave_as">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/saveas.png</normaloff>:/images/saveas.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save project as ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Saves current project to disk with the file name specified by user.</string>
+   </property>
+   <property name="whatsThis">
+    <string>Saves current project to disk with the file name specified by user.</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/quit.png</normaloff>:/images/quit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Quit</string>
+   </property>
+   <property name="toolTip">
+    <string>Exit the application</string>
+   </property>
+   <property name="whatsThis">
+    <string>Exit the application</string>
+   </property>
+  </action>
+  <action name="actionUndo">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/dryicons_undo.png</normaloff>:/images/dryicons_undo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Undo</string>
+   </property>
+   <property name="toolTip">
+    <string>Undo last action</string>
+   </property>
+   <property name="whatsThis">
+    <string>Undo last action</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
+  </action>
+  <action name="actionRedo">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/dryicons_redo.png</normaloff>:/images/dryicons_redo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Redo</string>
+   </property>
+   <property name="toolTip">
+    <string>Redo last action</string>
+   </property>
+   <property name="whatsThis">
+    <string>Redo last action</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+Z</string>
+   </property>
+  </action>
+  <action name="actionInsert_tag">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/dryicons_clock_add.png</normaloff>:/images/dryicons_clock_add.png</iconset>
+   </property>
+   <property name="text">
+    <string>Insert mark</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert a placeholder or timing mark</string>
+   </property>
+   <property name="whatsThis">
+    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Liberation Sans'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This action inserts a placeholder (if the player is stopped), or a timing mark representing current time (if the song is played). Placeholders are used as &quot;stoppers&quot; - when the song will be played and you will be inserting timing marks, the cursor will automatically stop on all placeholders, allowing you to concentrate on timings, and not on cursor movement.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;After the mark is set, the cursor will move to one of the following, whatever is closer:&lt;/p&gt;
+&lt;ul style=&quot;-qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Next placeholder or timing tag on this line (which will be overwritten by new value);&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Beginning of next line;&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Next character after just placed timing mark if placed on placeholder, and the &quot;doubling tag&quot; settings is enabled in settings;&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;End of current line if enabled in settings;&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Beginning of next word if enabled in settings;&lt;/li&gt;&lt;/ul&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="shortcut">
+    <string>F5</string>
+   </property>
+  </action>
+  <action name="actionRemove_tag">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/dryicons_clock_remove.png</normaloff>:/images/dryicons_clock_remove.png</iconset>
+   </property>
+   <property name="text">
+    <string>Remove last</string>
+   </property>
+   <property name="toolTip">
+    <string>Remove last inserted placeholder or mark</string>
+   </property>
+   <property name="whatsThis">
+    <string>This action removes the placeholder or timing mark which was inserted the last, and moves cursor to its position. The editor remembers all timing marks added since the project was loaded in current session, so this action will work for all added tags, not for the last one.
+
+If you want to delete the timing mark or placeholder under cursor, just press'Del'.</string>
+   </property>
+   <property name="shortcut">
+    <string>F8</string>
+   </property>
+  </action>
+  <action name="actionRemove_all_tags">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/quit.png</normaloff>:/images/quit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Remove all marks</string>
+   </property>
+   <property name="toolTip">
+    <string>Remove all placeholders and timing marks</string>
+   </property>
+   <property name="whatsThis">
+    <string>This action removes all placeholders and timing marks in the lyrics.</string>
+   </property>
+  </action>
+  <action name="actionClear_text">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/clear.png</normaloff>:/images/clear.png</iconset>
+   </property>
+   <property name="text">
+    <string>Clear text</string>
+   </property>
+   <property name="toolTip">
+    <string>Clear the text</string>
+   </property>
+   <property name="whatsThis">
+    <string>This action removes all text and timing marks, leaving the project with empty lyrics editor.</string>
+   </property>
+  </action>
+  <action name="actionGeneral">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/dryicons_process.png</normaloff>:/images/dryicons_process.png</iconset>
+   </property>
+   <property name="text">
+    <string>Application Settings...</string>
+   </property>
+   <property name="toolTip">
+    <string>Change the application settings</string>
+   </property>
+   <property name="whatsThis">
+    <string>Change the application settings</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About...</string>
+   </property>
+   <property name="toolTip">
+    <string>About the application</string>
+   </property>
+  </action>
+  <action name="action_openProject">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/dryicons_open_folder.png</normaloff>:/images/dryicons_open_folder.png</iconset>
+   </property>
+   <property name="text">
+    <string>Open project...</string>
+   </property>
+   <property name="toolTip">
+    <string>Open and load the project</string>
+   </property>
+   <property name="whatsThis">
+    <string>This action opens an existing project file, and loads it. Current project, if opened, will be closed.</string>
+   </property>
+  </action>
+  <action name="actionProject_settings">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/dryicons_process.png</normaloff>:/images/dryicons_process.png</iconset>
+   </property>
+   <property name="text">
+    <string>Project settings...</string>
+   </property>
+   <property name="toolTip">
+    <string>Changes project-specific settings</string>
+   </property>
+   <property name="whatsThis">
+    <string>This action changes project-specific settings, including mostly lyric tags.</string>
+   </property>
+  </action>
+  <action name="actionExport_lyric_file">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/saveas.png</normaloff>:/images/saveas.png</iconset>
+   </property>
+   <property name="text">
+    <string>Export lyric file...</string>
+   </property>
+   <property name="toolTip">
+    <string>Export lyric file in various formats</string>
+   </property>
+   <property name="whatsThis">
+    <string>This action lets you export a lyric file in a specific format. With some restrictions it allows export in other formats besides the main project format.</string>
+   </property>
+  </action>
+  <action name="actionView_lyric_file">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/dryicons_page_search.png</normaloff>:/images/dryicons_page_search.png</iconset>
+   </property>
+   <property name="text">
+    <string>View lyrics</string>
+   </property>
+   <property name="toolTip">
+    <string>View the generated lyrics</string>
+   </property>
+   <property name="whatsThis">
+    <string>This action shows the generated lyrics according to project lyrics type as they would be written into the file.</string>
+   </property>
+  </action>
+  <action name="actionTest_lyric_file">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/dryicons_computer.png</normaloff>:/images/dryicons_computer.png</iconset>
+   </property>
+   <property name="text">
+    <string>Test lyrics</string>
+   </property>
+   <property name="toolTip">
+    <string>Test the lyrics using built-in karaoke</string>
+   </property>
+   <property name="whatsThis">
+    <string>This action shows the lyrics test window, which is a mini Karaoke player. Once you hit &quot;Play&quot; button on player, the lyrics will be shown in the test window when the song is played. This way you can test the lyrics synchronization, and make corrections if necessary.
+
+The lyrics are copied into the test window when it is opened. The changes made in the editor are NOT silently propagated into the test window, and to update the test window, it must be closed and reopened again.
+
+Note that for formats which support blocks nothing will be shown until it's less than five seconds before the first sillable is being sung.</string>
+   </property>
+  </action>
+  <action name="actionEdit_header_data">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/dryicons_application_edit.png</normaloff>:/images/dryicons_application_edit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Edit header data...</string>
+   </property>
+   <property name="toolTip">
+    <string>Edit lyric header data</string>
+   </property>
+   <property name="whatsThis">
+    <string>This action shows a dialog to edit lyric header tags. Same as project settings without two tabs.</string>
+   </property>
+  </action>
+  <action name="actionValidate_lyrics">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/dryicons_application_search.png</normaloff>:/images/dryicons_application_search.png</iconset>
+   </property>
+   <property name="text">
+    <string>Validate lyrics</string>
+   </property>
+   <property name="toolTip">
+    <string>Validates the lyrics</string>
+   </property>
+   <property name="whatsThis">
+    <string>This action validates the lyrics according to current format. Validation makes sure the format is correct, that all required timing tags are present, and all restrictions set up in settings are met. Export, view and testing lyrics also execute validation before doing the action.</string>
+   </property>
+  </action>
+  <action name="actionShow_Player_dock_wingow">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/dryicons_music.png</normaloff>:/images/dryicons_music.png</iconset>
+   </property>
+   <property name="text">
+    <string>Show Player dock wingow</string>
+   </property>
+  </action>
+  <action name="actionTest_CDG_lyrics">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/dryicons_computer.png</normaloff>:/images/dryicons_computer.png</iconset>
+   </property>
+   <property name="text">
+    <string>Test CD+G file...</string>
+   </property>
+   <property name="toolTip">
+    <string>Test the lyrics if you gonna export them as CD+G</string>
+   </property>
+   <property name="whatsThis">
+    <string>This action shows the lyrics test window, which is a mini Karaoke player, but is limited in size as CD+G, so
+    it can be used to test the lyrics to see how they would be played on a real CD+G player.</string>
+   </property>
+  </action>
+  <action name="actionTrimspaces">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/clear.png</normaloff>:/images/clear.png</iconset>
+   </property>
+   <property name="text">
+    <string>Trim whitespace</string>
+   </property>
+   <property name="toolTip">
+    <string>Removes lead and tail spaces from every line</string>
+   </property>
+  </action>
+  <action name="actionSplit_current_line">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/page_swap.png</normaloff>:/images/page_swap.png</iconset>
+   </property>
+   <property name="text">
+    <string>Split current line</string>
+   </property>
+   <property name="shortcut">
+    <string>F10</string>
+   </property>
+  </action>
+  <action name="actionExport_video_file">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
+   </property>
+   <property name="text">
+    <string>Export video file...</string>
+   </property>
+  </action>
+  <action name="actionExport_CD_G_file">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/dryicons_cd.png</normaloff>:/images/dryicons_cd.png</iconset>
+   </property>
+   <property name="text">
+    <string>Export CD+G file...</string>
+   </property>
+  </action>
+  <action name="actionRegistration">
+   <property name="text">
+    <string>Registration...</string>
+   </property>
+  </action>
+  <action name="actionInsert_picture">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/dryicons_application_add.png</normaloff>:/images/dryicons_application_add.png</iconset>
+   </property>
+   <property name="text">
+    <string>Insert picture...</string>
+   </property>
+  </action>
+  <action name="actionInsert_video">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/dryicons_open_folder.png</normaloff>:/images/dryicons_open_folder.png</iconset>
+   </property>
+   <property name="text">
+    <string>Insert video...</string>
+   </property>
+  </action>
+  <action name="actionInsert_color_change">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/saveas.png</normaloff>:/images/saveas.png</iconset>
+   </property>
+   <property name="text">
+    <string>Insert color change...</string>
+   </property>
+  </action>
+  <action name="actionAdd_eol_timing_marks">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/dryicons_application_edit.png</normaloff>:/images/dryicons_application_edit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add end timing marks</string>
+   </property>
+   <property name="toolTip">
+    <string>Adds missing end-of-line timing marks automatically. Doesn't touch existing marks.</string>
+   </property>
+  </action>
+  <action name="actionTime_adjustment">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/dryicons_clock.png</normaloff>:/images/dryicons_clock.png</iconset>
+   </property>
+   <property name="text">
+    <string>Time adjustment ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Pops up the time adjustment dialog</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Editor</class>
+   <extends>QWidget</extends>
+   <header>editor.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

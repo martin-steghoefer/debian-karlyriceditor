@@ -1,10 +1,23 @@
-Description: Spelling error found by lintian ("suport" vs. "support")
- Lintian: spelling-error-in-binary -- usr/bin/karlyriceditor -- suport / support
+From: =?utf-8?q?Martin_Stegh=C3=B6fer?= <martin@steghoefer.eu>
+Date: Sat, 17 Nov 2012 23:57:44 +0100
+Subject: Spelling error found by lintian ("suport" vs. "support")
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+
 Author: Martin Steghöfer <martin@steghoefer.eu>
 
+Lintian complained: spelling-error-in-binary -- usr/bin/karlyriceditor --
+suport / support
+---
+ src/dialog_settings.ui | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/dialog_settings.ui b/src/dialog_settings.ui
+index 2e29c9a..a5fdb92 100644
 --- a/src/dialog_settings.ui
 +++ b/src/dialog_settings.ui
-@@ -431,7 +431,7 @@
+@@ -431,7 +431,7 @@ p, li { white-space: pre-wrap; }
            <item>
             <widget class="QCheckBox" name="cbShowPitchTimingMark">
              <property name="whatsThis">

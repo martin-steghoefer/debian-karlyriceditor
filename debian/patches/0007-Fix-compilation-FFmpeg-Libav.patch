@@ -1,21 +1,76 @@
-Description: Translate FFmpeg calls to Libav-compatible calls
- The upstream developers compile Karlyriceditor against FFmpeg, but in Debian
- there is only Libav available, whose API is slowly drifting away from
- FFmpeg's. This patch adapts the code to several of those differences:
- * The second parameters of "avformat_new_stream" is of non-const pointer
-   type, but the code tries to pass a const pointer to it.
- * There is no AV_ROUND_PASS_MINMAX flag for the rounding parameter of
-   av_rescale_q_rnd in Libav.
- * The member r_frame_rate is no longer present in AVStream. The recommended
-   replacement is avg_frame_rate.
- * The enums CODEC_ID_MP3 and CODEC_ID_AC3 have been prefixed with AV_.
- * The function avcodec_alloc_frame is deprecated in favor of av_frame_alloc.
+From: =?utf-8?q?Martin_Stegh=C3=B6fer?= <martin@steghoefer.eu>
+Date: Sat, 12 Apr 2014 15:19:48 +0200
+Subject: Fix compilation: FFmpeg/Libav
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+
 Author: Martin Steghöfer <martin@steghoefer.eu>
 Forwarded: not-needed
 
+The upstream developers compile Karlyriceditor against FFmpeg, but in Debian
+there is only Libav available, whose API is slowly drifting away from
+FFmpeg's. This patch adapts the code to several of those differences:
+* The second parameters of "avformat_new_stream" is of non-const pointer
+  type, but the code tries to pass a const pointer to it.
+* There is no AV_ROUND_PASS_MINMAX flag for the rounding parameter of
+  av_rescale_q_rnd in Libav.
+* The member r_frame_rate is no longer present in AVStream. The recommended
+  replacement is avg_frame_rate.
+* The enums CODEC_ID_MP3 and CODEC_ID_AC3 have been prefixed with AV_.
+* The function avcodec_alloc_frame is deprecated in favor of av_frame_alloc.
+---
+ src/audioplayerprivate.cpp |  2 +-
+ src/ffmpegvideodecoder.cpp |  8 ++++----
+ src/ffmpegvideoencoder.cpp | 28 ++++++++++++++++++----------
+ 3 files changed, 23 insertions(+), 15 deletions(-)
+
+diff --git a/src/audioplayerprivate.cpp b/src/audioplayerprivate.cpp
+index 1b6b32d..4933822 100644
+--- a/src/audioplayerprivate.cpp
++++ b/src/audioplayerprivate.cpp
+@@ -227,7 +227,7 @@ bool AudioPlayerPrivate::open( const QString& filename )
+ 	}
+ 
+ 	// Allocate the buffer
+-	m_frame = avcodec_alloc_frame();
++	m_frame = av_frame_alloc();
+ 
+ 	if ( !m_frame )
+ 	{
+diff --git a/src/ffmpegvideodecoder.cpp b/src/ffmpegvideodecoder.cpp
+index 2ec5969..7820f72 100644
+--- a/src/ffmpegvideodecoder.cpp
++++ b/src/ffmpegvideodecoder.cpp
+@@ -113,8 +113,8 @@ bool FFMpegVideoDecoder::openFile( const QString& filename, unsigned int seekto
+ 	if ( d->videoStream == -1 )
+ 		return false; // Didn't find a video stream
+ 
+-	d->m_fps_den = d->pFormatCtx->streams[d->videoStream]->r_frame_rate.den;
+-	d->m_fps_num = d->pFormatCtx->streams[d->videoStream]->r_frame_rate.num;
++	d->m_fps_den = d->pFormatCtx->streams[d->videoStream]->avg_frame_rate.den;
++	d->m_fps_num = d->pFormatCtx->streams[d->videoStream]->avg_frame_rate.num;
+ 
+ 	if ( d->m_fps_den == 60000 )
+ 		d->m_fps_den = 30000;
+@@ -139,10 +139,10 @@ bool FFMpegVideoDecoder::openFile( const QString& filename, unsigned int seekto
+ 	}
+ 
+ 	// Allocate video frame
+-	d->pFrame = avcodec_alloc_frame();
++	d->pFrame = av_frame_alloc();
+ 
+ 	// Allocate an AVFrame structure
+-	d->pFrameRGB = avcodec_alloc_frame();
++	d->pFrameRGB = av_frame_alloc();
+ 
+ 	if ( !d->pFrame || !d->pFrameRGB )
+ 	{
+diff --git a/src/ffmpegvideoencoder.cpp b/src/ffmpegvideoencoder.cpp
+index 49182b5..2f5232e 100644
 --- a/src/ffmpegvideoencoder.cpp
 +++ b/src/ffmpegvideoencoder.cpp
-@@ -383,7 +383,11 @@
+@@ -383,7 +383,11 @@ av_log_set_level(AV_LOG_VERBOSE);
  	}
  
  	// Create the video stream, index
@@ -28,7 +83,7 @@ Forwarded: not-needed
  
  	if ( !videoStream )
  	{
-@@ -425,10 +429,10 @@
+@@ -425,10 +429,10 @@ av_log_set_level(AV_LOG_VERBOSE);
  			// We're copying the stream
  			memcpy( newCtx, m_aplayer->aCodecCtx, sizeof(AVCodecContext) );
  
@@ -41,7 +96,7 @@ Forwarded: not-needed
  				newCtx->block_align= 0;
  		}
  		else
-@@ -443,7 +447,7 @@
+@@ -443,7 +447,7 @@ av_log_set_level(AV_LOG_VERBOSE);
  			}
  
  			// Hack to use the fixed AC3 codec if available
@@ -50,7 +105,7 @@ Forwarded: not-needed
  				audioCodec = avcodec_find_encoder_by_name( "ac3_fixed" );
  
  			// Allocate the audio context
-@@ -544,7 +548,7 @@
+@@ -544,7 +548,7 @@ av_log_set_level(AV_LOG_VERBOSE);
  				goto cleanup;
  			}
  
@@ -59,7 +114,7 @@ Forwarded: not-needed
  
  			if ( !audioFrame )
  			{
-@@ -573,10 +577,10 @@
+@@ -573,10 +577,10 @@ av_log_set_level(AV_LOG_VERBOSE);
  				goto cleanup;
  			}
  
@@ -72,7 +127,7 @@ Forwarded: not-needed
  				audioStream->codec->block_align= 0;
  		}
  
-@@ -595,7 +599,7 @@
+@@ -595,7 +599,7 @@ av_log_set_level(AV_LOG_VERBOSE);
  	}
  
  	// Allocate the YUV frame
@@ -81,7 +136,7 @@ Forwarded: not-needed
  
  	if ( !videoFrame )
  	{
-@@ -753,8 +757,12 @@
+@@ -753,8 +757,12 @@ int FFMpegVideoEncoderPriv::encodeImage( const QImage &img, qint64 )
  					pkt.flags |= AV_PKT_FLAG_KEY;
  
  					// Rescale output packet timestamp values from codec to stream timebase
@@ -96,40 +151,3 @@ Forwarded: not-needed
  					pkt.duration = av_rescale_q( pkt.duration, audioCodecCtx->time_base, audioStream->time_base);
  
  					// And write the file
---- a/src/ffmpegvideodecoder.cpp
-+++ b/src/ffmpegvideodecoder.cpp
-@@ -113,8 +113,8 @@
- 	if ( d->videoStream == -1 )
- 		return false; // Didn't find a video stream
- 
--	d->m_fps_den = d->pFormatCtx->streams[d->videoStream]->r_frame_rate.den;
--	d->m_fps_num = d->pFormatCtx->streams[d->videoStream]->r_frame_rate.num;
-+	d->m_fps_den = d->pFormatCtx->streams[d->videoStream]->avg_frame_rate.den;
-+	d->m_fps_num = d->pFormatCtx->streams[d->videoStream]->avg_frame_rate.num;
- 
- 	if ( d->m_fps_den == 60000 )
- 		d->m_fps_den = 30000;
-@@ -139,10 +139,10 @@
- 	}
- 
- 	// Allocate video frame
--	d->pFrame = avcodec_alloc_frame();
-+	d->pFrame = av_frame_alloc();
- 
- 	// Allocate an AVFrame structure
--	d->pFrameRGB = avcodec_alloc_frame();
-+	d->pFrameRGB = av_frame_alloc();
- 
- 	if ( !d->pFrame || !d->pFrameRGB )
- 	{
---- a/src/audioplayerprivate.cpp
-+++ b/src/audioplayerprivate.cpp
-@@ -227,7 +227,7 @@
- 	}
- 
- 	// Allocate the buffer
--	m_frame = avcodec_alloc_frame();
-+	m_frame = av_frame_alloc();
- 
- 	if ( !m_frame )
- 	{

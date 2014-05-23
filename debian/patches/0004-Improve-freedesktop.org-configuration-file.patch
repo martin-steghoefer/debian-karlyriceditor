@@ -1,15 +1,27 @@
-Description: Improve freedesktop.org configuration file
- 1. The category "Multimedia;Karaoke" is not a standard category of the
- freedesktop.org standard.
- 2. Icons should better be given without full path. This way the desktop
- manager can support icon themes.
- 3. Removed no longer necessary encoding specification (now it's always UTF-8).
- 4. Added categories
- 5. Use "Name" and "GenericName" in the way defined by freedesktop.org:
- http://standards.freedesktop.org/desktop-entry-spec/latest/ar01s05.html
+From: =?utf-8?q?Martin_Stegh=C3=B6fer?= <martin@steghoefer.eu>
+Date: Sat, 17 Nov 2012 22:37:09 +0100
+Subject: Improve freedesktop.org configuration file
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+
 Author: Martin Steghöfer <martin@steghoefer.eu>
 Forwarded: not-needed
 
+1. The category "Multimedia;Karaoke" is not a standard category of the
+   freedesktop.org standard.
+2. Icons should better be given without full path. This way the desktop
+   manager can support icon themes.
+3. Removed no longer necessary encoding specification (now it's always UTF-8).
+4. Added categories
+5. Use "Name" and "GenericName" in the way defined by freedesktop.org:
+   http://standards.freedesktop.org/desktop-entry-spec/latest/ar01s05.html
+---
+ packages/karlyriceditor.desktop | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/packages/karlyriceditor.desktop b/packages/karlyriceditor.desktop
+index a8e87f1..b751edf 100644
 --- a/packages/karlyriceditor.desktop
 +++ b/packages/karlyriceditor.desktop
 @@ -1,8 +1,9 @@

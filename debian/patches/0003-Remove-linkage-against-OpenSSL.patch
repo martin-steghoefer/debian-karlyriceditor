@@ -1,31 +1,33 @@
-Description: Get rid of linkage against OpenSSL
- The licenses of this software (GPL) and the one of OpenSSL are incompatible
- according to Debian's position. OpenSSL is used in 2 places:
- The first one is a module called "licensing" that can be deactivated using
- a preprocessor definition. The module doesn't seem suitable for free software
- anyway. It removes a line giving credit to the karlyriceditor program from
- the rendered videos, if a valid license is installed. However, it doesn't
- become clear, how such a "license" could be obtained. Besides, the software is
- licensed under the GPL, so every user is able and allowed to remove the credit
- line anyway.
- The second place is a reader for the "Karafun" file format. Its decryption
- functionality, which uses OpenSSL, can be deactivated via a preprocessor
- definition. The reader then supports only unencrypted files and will give an
- error message, when trying to load encrypted files.
+From: =?utf-8?q?Martin_Stegh=C3=B6fer?= <martin@steghoefer.eu>
+Date: Tue, 13 Nov 2012 22:40:43 +0100
+Subject: Remove linkage against OpenSSL
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+
 Author: Martin Steghöfer <martin@steghoefer.eu>
 Forwarded: not-needed
 
---- a/src/src.pro
-+++ b/src/src.pro
-@@ -1,8 +1,6 @@
- TEMPLATE = app
- TARGET = ../bin/karlyriceditor
- DEPENDPATH += .
--LIBS += -lcrypto
--DEFINES += USE_LICENSING
- CONFIG += link_pkgconfig
- PKGCONFIG += libavformat libavcodec libswscale  libavresample libavutil sdl
- 
+The licenses of this software (GPL) and the one of OpenSSL are incompatible
+according to Debian's position. OpenSSL is used in 2 places:
+The first one is a module called "licensing" that can be deactivated using
+a preprocessor definition. The module doesn't seem suitable for free software
+anyway. It removes a line giving credit to the karlyriceditor program from
+the rendered videos, if a valid license is installed. However, it doesn't
+become clear, how such a "license" could be obtained. Besides, the software is
+licensed under the GPL, so every user is able and allowed to remove the credit
+line anyway.
+The second place is a reader for the "Karafun" file format. Its decryption
+functionality, which uses OpenSSL, can be deactivated via a preprocessor
+definition. The reader then supports only unencrypted files and will give an
+error message, when trying to load encrypted files.
+---
+ src/kfn_file_parser.cpp | 2 --
+ src/src.pro             | 2 --
+ 2 files changed, 4 deletions(-)
+
+diff --git a/src/kfn_file_parser.cpp b/src/kfn_file_parser.cpp
+index d562f28..7239c8c 100644
 --- a/src/kfn_file_parser.cpp
 +++ b/src/kfn_file_parser.cpp
 @@ -23,8 +23,6 @@
@@ -37,3 +39,16 @@ Forwarded: not-needed
  #if defined (KFN_SUPPORT_ENCRYPTION)
  	#include <openssl/evp.h>
  #endif
+diff --git a/src/src.pro b/src/src.pro
+index d0fba5f..d51effb 100644
+--- a/src/src.pro
++++ b/src/src.pro
+@@ -1,8 +1,6 @@
+ TEMPLATE = app
+ TARGET = ../bin/karlyriceditor
+ DEPENDPATH += .
+-LIBS += -lcrypto
+-DEFINES += USE_LICENSING
+ CONFIG += link_pkgconfig
+ PKGCONFIG += libavformat libavcodec libswscale  libavresample libavutil sdl
+ 

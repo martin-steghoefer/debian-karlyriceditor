@@ -1,13 +1,25 @@
-Description: Make sure that qmake respects external build/linking flags
- QMake doesn't respect external build/linking flags that are specified in
- environment variables. Added QMake code to read those environment variables
- explicitly and pass them on to the QMake build system.
+From: =?utf-8?q?Martin_Stegh=C3=B6fer?= <martin@steghoefer.eu>
+Date: Wed, 21 May 2014 21:07:10 +0200
+Subject: Make qmake respect external build/linking flags
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+
 Author: Martin Steghöfer <martin@steghoefer.eu>
 Forwarded: not-needed
 
+QMake doesn't automatically respect external build/linking flags that are
+specified in environment variables. Added QMake code to read those environment
+variables explicitly and pass them on to the QMake build system.
+---
+ src/src.pro | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/src.pro b/src/src.pro
+index d51effb..1c0150a 100644
 --- a/src/src.pro
 +++ b/src/src.pro
-@@ -119,3 +119,7 @@
+@@ -119,3 +119,7 @@ BINDIR = $$PREFIX/bin
  installbinfiles.files += ../bin/karlyriceditor
  installbinfiles.path = $$BINDIR
  INSTALLS += installbinfiles

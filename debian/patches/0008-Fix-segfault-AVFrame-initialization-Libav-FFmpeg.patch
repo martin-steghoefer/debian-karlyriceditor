@@ -1,21 +1,33 @@
-Description: Fix segfault due to AVFrame initialization (Libav vs. FFmpeg)
- The upstream developers compile Karlyriceditor against FFmpeg, but in Debian
- there is only Libav available, whose API is slowly drifting away from
- FFmpeg's. This patch adapts the code to one of those differences.
- In Libav the function avcodec_get_frame_defaults cannot be called on a
- completely uninitialized object. It expects at least some pointers inside
- the struct to be initialized to NULL. Otherwise (depending on the random
- pointer value) it may perform a free() on that random pointer. In Libav the
- preferred way to initialize an AVFrame object is by calling
- avcodec_alloc_frame(), which allocates the memory, initializes it to zero
- and then calls avcodec_get_frame_defaults itself. This involves changing
- "srcaudio" from a stack object to a heap object and freeing it after use.
+From: =?utf-8?q?Martin_Stegh=C3=B6fer?= <martin@steghoefer.eu>
+Date: Sat, 10 May 2014 01:04:56 +0200
+Subject: Fix segfault: AVFrame initialization (Libav/FFmpeg)
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+
 Author: Martin Steghöfer <martin@steghoefer.eu>
 Forwarded: not-needed
 
+The upstream developers compile Karlyriceditor against FFmpeg, but in Debian
+there is only Libav available, whose API is slowly drifting away from
+FFmpeg's. This patch adapts the code to one of those differences.
+In Libav the function avcodec_get_frame_defaults cannot be called on a
+completely uninitialized object. It expects at least some pointers inside
+the struct to be initialized to NULL. Otherwise (depending on the random
+pointer value) it may perform a free() on that random pointer. In Libav the
+preferred way to initialize an AVFrame object is by calling
+avcodec_alloc_frame(), which allocates the memory, initializes it to zero
+and then calls avcodec_get_frame_defaults itself. This involves changing
+"srcaudio" from a stack object to a heap object and freeing it after use.
+---
+ src/ffmpegvideoencoder.cpp | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/src/ffmpegvideoencoder.cpp b/src/ffmpegvideoencoder.cpp
+index 2f5232e..7ccb870 100644
 --- a/src/ffmpegvideoencoder.cpp
 +++ b/src/ffmpegvideoencoder.cpp
-@@ -685,12 +685,11 @@
+@@ -685,12 +685,11 @@ int FFMpegVideoEncoderPriv::encodeImage( const QImage &img, qint64 )
  			}
  
  			// Initialize the frame
@@ -30,7 +42,7 @@ Forwarded: not-needed
  
  			if ( err < 0 )
  			{
-@@ -710,9 +709,9 @@
+@@ -710,9 +709,9 @@ int FFMpegVideoEncoderPriv::encodeImage( const QImage &img, qint64 )
  											NULL,
  											0,
  											0,
@@ -42,7 +54,7 @@ Forwarded: not-needed
  			{
  				qWarning( "Error resampling decoded audio: %d", err );
  				return -1;
-@@ -777,6 +776,8 @@
+@@ -777,6 +776,8 @@ int FFMpegVideoEncoderPriv::encodeImage( const QImage &img, qint64 )
  					av_free_packet( &pkt );
  				}
  			}

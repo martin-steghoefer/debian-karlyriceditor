@@ -1,20 +1,32 @@
-Description: Fix crash on Debian wheezy
- On Debian wheezy the executable "karlyriceditor" crashes on startup with the
- following message:
- > QThread: Destroyed while thread is still running
- > Segmentation fault
- The reason was an inadequate use of the (dangerous) qPrintable macro. The
- macro evaluates to a pointer that points to memory within a temporary object.
- So this pointer becomes invalid as soon as the whole expression is evaluated.
- If the pointer has to be used outside of this expression then either its
- content has to be copied (and deleted when no longer needed) or (what is done
- in this patch) the temporary object has to be stored in a local variable.
+From: =?utf-8?q?Martin_Stegh=C3=B6fer?= <martin@steghoefer.eu>
+Date: Thu, 15 Nov 2012 21:19:18 +0100
+Subject: Fix qPrintable crash on Debian wheezy
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+
 Author: Martin Steghöfer <martin@steghoefer.eu>
 Forwarded: https://sourceforge.net/tracker/?func=detail&aid=3586455&group_id=290648&atid=1229531
 
+On Debian wheezy the executable "karlyriceditor" crashes on startup with the
+following message:
+> QThread: Destroyed while thread is still running
+> Segmentation fault
+The reason was an inadequate use of the (dangerous) qPrintable macro. The
+macro evaluates to a pointer that points to memory within a temporary object.
+So this pointer becomes invalid as soon as the whole expression is evaluated.
+If the pointer has to be used outside of this expression then either its
+content has to be copied (and deleted when no longer needed) or (what is done
+in this patch) the temporary object has to be stored in a local variable.
+---
+ src/checknewversion.cpp | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/checknewversion.cpp b/src/checknewversion.cpp
+index ed3bd35..b3b64b5 100644
 --- a/src/checknewversion.cpp
 +++ b/src/checknewversion.cpp
-@@ -200,7 +200,8 @@
+@@ -200,7 +200,8 @@ void CheckNewVersion::run()
  	// Send the request
  	reportStatus( Status_SendingRequest );
  

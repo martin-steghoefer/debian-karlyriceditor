@@ -1,12 +1,24 @@
-Description: Add support for "install" target in Makefile
- The Makefile automatically created by qmake didn't install any files
- on "make install". Added commands to copy the executable to $PREFIX/bin.
+From: =?utf-8?q?Martin_Stegh=C3=B6fer?= <martin@steghoefer.eu>
+Date: Tue, 13 Nov 2012 21:04:53 +0100
+Subject: Add support for "install" target in Makefile
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+
 Author: Martin Steghöfer <martin@steghoefer.eu>
 Forwarded: https://sourceforge.net/tracker/?func=detail&aid=3586457&group_id=290648&atid=1229531
 
+The Makefile automatically created by qmake didn't install any files
+on "make install". Added commands to copy the executable to $PREFIX/bin.
+---
+ src/src.pro | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/src/src.pro b/src/src.pro
+index f9dee0a..d0fba5f 100644
 --- a/src/src.pro
 +++ b/src/src.pro
-@@ -113,4 +113,11 @@
+@@ -113,4 +113,11 @@ FORMS += mainwindow.ui \
      dialog_timeadjustment.ui \
      video_profile_dialog.ui
  

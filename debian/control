@@ -11,9 +11,9 @@ Vcs-Browser: https://github.com/martin-steghoefer/debian-karlyriceditor
 Package: karlyriceditor
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: karaoke lyrics editor
- A Qt-based GUI application to edit, synchronize and render karaoke lyrics in
- popular formats, including CD+G, LRC, KaraFun, PowerKaraoke and UltraStar.
- Features full support for non-English languages, built-in karaoke testing
- window and Karaoke video rendering. Supports changing image and video
- backgrounds for video rendering and export.
+Description: Karaoke lyrics editor
+ Karlyriceditor is a Qt-based GUI application to edit, synchronize and render
+ karaoke lyrics in popular formats, including CD+G, LRC, KaraFun, PowerKaraoke
+ and UltraStar. It features full support for non-English languages, a built-in
+ karaoke testing window and karaoke video rendering. It supports changing
+ image and video backgrounds for video rendering and export.

@@ -18,17 +18,28 @@ FFmpeg's. This patch adapts the code to several of those differences:
 * The member r_frame_rate is no longer present in AVStream. The recommended
   replacement is avg_frame_rate.
 * The enums CODEC_ID_MP3 and CODEC_ID_AC3 have been prefixed with AV_.
-* The function avcodec_alloc_frame is deprecated in favor of av_frame_alloc.
+* The function avcodec_alloc_frame was removed in favor of av_frame_alloc.
+  The corresponding deallocation function is av_frame_free (not the generic
+  av_free).
 ---
- src/audioplayerprivate.cpp |  2 +-
+ src/audioplayerprivate.cpp |  4 ++--
  src/ffmpegvideodecoder.cpp |  8 ++++----
- src/ffmpegvideoencoder.cpp | 28 ++++++++++++++++++----------
- 3 files changed, 23 insertions(+), 15 deletions(-)
+ src/ffmpegvideoencoder.cpp | 32 ++++++++++++++++++++------------
+ 3 files changed, 26 insertions(+), 18 deletions(-)
 
 diff --git a/src/audioplayerprivate.cpp b/src/audioplayerprivate.cpp
-index 1b6b32d..4933822 100644
+index 1b6b32d..a6536cd 100644
 --- a/src/audioplayerprivate.cpp
 +++ b/src/audioplayerprivate.cpp
+@@ -118,7 +118,7 @@ void AudioPlayerPrivate::close()
+ 	}
+ 
+ 	if ( m_frame )
+-		av_free( m_frame );
++		av_frame_free( &m_frame );
+ 
+ 	m_frame = 0;
+ 	pFormatCtx = 0;
 @@ -227,7 +227,7 @@ bool AudioPlayerPrivate::open( const QString& filename )
  	}
  
@@ -67,9 +78,22 @@ index 2ec5969..7820f72 100644
  	if ( !d->pFrame || !d->pFrameRGB )
  	{
 diff --git a/src/ffmpegvideoencoder.cpp b/src/ffmpegvideoencoder.cpp
-index 49182b5..2f5232e 100644
+index 49182b5..bdf1730 100644
 --- a/src/ffmpegvideoencoder.cpp
 +++ b/src/ffmpegvideoencoder.cpp
+@@ -174,10 +174,10 @@ bool FFMpegVideoEncoderPriv::close()
+ 	delete[] audioSampleBuffer;
+ 
+ 	if ( videoFrame )
+-		av_free(videoFrame);
++		av_frame_free( &videoFrame );
+ 
+ 	if ( audioFrame )
+-		av_free( audioFrame );
++		av_frame_free( &audioFrame );
+ 
+ 	outputFormatCtx = 0;
+ 	outputFormat = 0;
 @@ -383,7 +383,11 @@ av_log_set_level(AV_LOG_VERBOSE);
  	}
  

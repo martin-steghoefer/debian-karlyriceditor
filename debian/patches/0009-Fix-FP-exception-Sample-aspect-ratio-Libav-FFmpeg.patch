@@ -18,7 +18,7 @@ initialized to the one of its codec. So this has to be done manually.
  1 file changed, 1 insertion(+)
 
 diff --git a/src/ffmpegvideoencoder.cpp b/src/ffmpegvideoencoder.cpp
-index 7ccb870..1747c5e 100644
+index ccfdc7c..3122f2a 100644
 --- a/src/ffmpegvideoencoder.cpp
 +++ b/src/ffmpegvideoencoder.cpp
 @@ -399,6 +399,7 @@ av_log_set_level(AV_LOG_VERBOSE);

@@ -24,7 +24,7 @@ and then calls avcodec_get_frame_defaults itself. This involves changing
  1 file changed, 6 insertions(+), 5 deletions(-)
 
 diff --git a/src/ffmpegvideoencoder.cpp b/src/ffmpegvideoencoder.cpp
-index 2f5232e..7ccb870 100644
+index bdf1730..ccfdc7c 100644
 --- a/src/ffmpegvideoencoder.cpp
 +++ b/src/ffmpegvideoencoder.cpp
 @@ -685,12 +685,11 @@ int FFMpegVideoEncoderPriv::encodeImage( const QImage &img, qint64 )
@@ -59,7 +59,7 @@ index 2f5232e..7ccb870 100644
  				}
  			}
 +
-+			av_free(srcaudio);
++			av_frame_free( &srcaudio );
  		}
  	}
  

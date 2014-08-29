@@ -8,3 +8,4 @@
 0008-Fix-segfault-AVFrame-initialization-Libav-FFmpeg.patch
 0009-Fix-FP-exception-Sample-aspect-ratio-Libav-FFmpeg.patch
 0010-Make-qmake-respect-external-build-linking-flags.patch
+0011-Libav-in-About-dialog.patch

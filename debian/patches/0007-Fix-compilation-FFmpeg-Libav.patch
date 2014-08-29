@@ -23,9 +23,10 @@ FFmpeg's. This patch adapts the code to several of those differences:
   av_free).
 ---
  src/audioplayerprivate.cpp |  4 ++--
+ src/ffmpeg_headers.h       | 10 ++++++++++
  src/ffmpegvideodecoder.cpp |  8 ++++----
  src/ffmpegvideoencoder.cpp | 32 ++++++++++++++++++++------------
- 3 files changed, 26 insertions(+), 18 deletions(-)
+ 4 files changed, 36 insertions(+), 18 deletions(-)
 
 diff --git a/src/audioplayerprivate.cpp b/src/audioplayerprivate.cpp
 index 1b6b32d..a6536cd 100644
@@ -49,6 +50,32 @@ index 1b6b32d..a6536cd 100644
  
  	if ( !m_frame )
  	{
+diff --git a/src/ffmpeg_headers.h b/src/ffmpeg_headers.h
+index 3d18808..c108c86 100644
+--- a/src/ffmpeg_headers.h
++++ b/src/ffmpeg_headers.h
+@@ -34,6 +34,7 @@ extern "C"
+ #include <libswscale/swscale.h>
+ #include <libavresample/avresample.h>
+ #include <libavutil/opt.h>
++#include <libavutil/version.h>
+ 
+ };
+ 
+@@ -41,4 +42,13 @@ void ffmpeg_init_once();
+ 
+ #define FFMPEG_FILENAME(string)	( qPrintable(string) )
+ 
++/*
++ * Functions were renamed in interface version 53 (=10.0), but are
++ * essentially the same (documentation literally says the same).
++ */
++#if LIBAVUTIL_VERSION_MAJOR < 53
++#  define av_frame_alloc avcodec_alloc_frame
++#  define av_frame_free avcodec_free_frame
++#endif
++
+ #endif // FFMPEG_HEADERS_H
 diff --git a/src/ffmpegvideodecoder.cpp b/src/ffmpegvideodecoder.cpp
 index 2ec5969..7820f72 100644
 --- a/src/ffmpegvideodecoder.cpp

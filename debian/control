@@ -2,7 +2,7 @@ Source: karlyriceditor
 Section: utils
 Priority: extra
 Maintainer: Martin Steghöfer <martin@steghoefer.eu>
-Build-Depends: debhelper (>= 8), autotools-dev, dpkg-dev (>= 1.16), qt4-qmake, libavformat-dev, libavresample-dev, pkg-config, libswscale-dev, libsdl1.2-dev, libqt4-dev-bin, libqt4-dev, docbook-to-man
+Build-Depends: debhelper (>= 8), autotools-dev, dpkg-dev (>= 1.16), qt4-qmake, libavformat-dev (>= 6:10), libavresample-dev (>= 6:10), pkg-config, libswscale-dev, libsdl1.2-dev, libqt4-dev-bin, libqt4-dev, docbook-to-man
 Standards-Version: 3.9.5
 Homepage: http://sourceforge.net/projects/karlyriceditor/
 Vcs-Git: https://github.com/martin-steghoefer/debian-karlyriceditor.git

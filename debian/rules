@@ -33,6 +33,3 @@ override_dh_auto_build: $(MANPAGES)
 debian/%.1: debian/%.sgml
 	docbook-to-man $< > $@
 
-clean:
-	rm -f $(MANPAGES)
-	dh $@

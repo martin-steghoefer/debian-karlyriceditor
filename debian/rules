@@ -7,7 +7,7 @@ export QMAKE:="qmake-qt4"
 
 
 %:
-	dh $@ 
+	dh $@
 
 
 # We call qmake explicitly (instead of letting dh do the work) in

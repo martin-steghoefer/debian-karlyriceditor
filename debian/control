@@ -14,7 +14,7 @@ Build-Depends: debhelper (>= 9),
     libqt4-dev-bin,
     libqt4-dev,
     docbook-to-man
-Standards-Version: 3.9.5
+Standards-Version: 3.9.7
 Homepage: http://sourceforge.net/projects/karlyriceditor/
 Vcs-Git: https://github.com/martin-steghoefer/debian-karlyriceditor.git
 Vcs-Browser: https://github.com/martin-steghoefer/debian-karlyriceditor

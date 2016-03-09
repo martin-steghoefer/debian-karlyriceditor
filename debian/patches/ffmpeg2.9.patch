@@ -1,0 +1,88 @@
+From: Andreas Cadhalpun <andreas.cadhalpun@googlemail.com>
+Date: Wed, 9 Mar 2016 12:08:03 +0100
+Subject: Fix FFmpeg 2.9 compilation
+
+Author: Andreas Cadhalpun <andreas.cadhalpun@googlemail.com>
+Forwarded: https://sourceforge.net/p/karlyriceditor/bugs/17/
+
+Patch to make Karlyriceditor compile/work with the upcoming 2.9/3.0 FFmpeg
+release.
+---
+ src/ffmpegvideodecoder.cpp |  6 +++---
+ src/ffmpegvideoencoder.cpp | 12 +++++-------
+ 2 files changed, 8 insertions(+), 10 deletions(-)
+
+diff --git a/src/ffmpegvideodecoder.cpp b/src/ffmpegvideodecoder.cpp
+index 9befe43..fe12445 100644
+--- a/src/ffmpegvideodecoder.cpp
++++ b/src/ffmpegvideodecoder.cpp
+@@ -151,12 +151,12 @@ bool FFMpegVideoDecoder::openFile( const QString& filename, unsigned int seekto
+ 	}
+ 
+ 	// Determine required buffer size and allocate buffer
+-	int numBytes = avpicture_get_size( PIX_FMT_RGB24, d->pCodecCtx->width, d->pCodecCtx->height );
++	int numBytes = avpicture_get_size( AV_PIX_FMT_RGB24, d->pCodecCtx->width, d->pCodecCtx->height );
+ 	d->m_buffer.resize( numBytes );
+ 
+ 	// Assign appropriate parts of buffer to image planes in pFrameRGB
+ 	avpicture_fill( (AVPicture *) d->pFrameRGB, (uint8_t*) d->m_buffer.data(),
+-					PIX_FMT_RGB24, d->pCodecCtx->width, d->pCodecCtx->height );
++					AV_PIX_FMT_RGB24, d->pCodecCtx->width, d->pCodecCtx->height );
+ 
+ 	d->skipFrames = seekto;
+ 	return true;
+@@ -215,7 +215,7 @@ bool FFMpegVideoDecoderPriv::readFrame( int frame )
+ 					int w = pCodecCtx->width;
+ 					int h = pCodecCtx->height;
+ 
+-					img_convert_ctx = sws_getCachedContext(img_convert_ctx,w, h, pCodecCtx->pix_fmt, w, h, PIX_FMT_RGB24, SWS_BICUBIC, NULL, NULL, NULL);
++					img_convert_ctx = sws_getCachedContext(img_convert_ctx,w, h, pCodecCtx->pix_fmt, w, h, AV_PIX_FMT_RGB24, SWS_BICUBIC, NULL, NULL, NULL);
+ 
+ 					if ( img_convert_ctx == NULL )
+ 					{
+diff --git a/src/ffmpegvideoencoder.cpp b/src/ffmpegvideoencoder.cpp
+index a8202e3..bea6096 100644
+--- a/src/ffmpegvideoencoder.cpp
++++ b/src/ffmpegvideoencoder.cpp
+@@ -333,7 +333,7 @@ av_log_set_level(AV_LOG_VERBOSE);
+ 	videoCodecCtx->time_base.num = m_videoformat->frame_rate_num;
+ 	videoCodecCtx->time_base.den = m_videoformat->frame_rate_den;
+ 	videoCodecCtx->gop_size = (m_videoformat->frame_rate_den / m_videoformat->frame_rate_num) / 2;	// GOP size is framerate / 2
+-	videoCodecCtx->pix_fmt = PIX_FMT_YUV420P;
++	videoCodecCtx->pix_fmt = AV_PIX_FMT_YUV420P;
+ 	videoCodecCtx->bit_rate = m_videobitrate;
+ 	videoCodecCtx->bit_rate_tolerance = m_videobitrate * av_q2d(videoCodecCtx->time_base);
+ 
+@@ -417,8 +417,6 @@ av_log_set_level(AV_LOG_VERBOSE);
+ 
+ 			audioStream->time_base = origAudioStream->time_base;
+ 			audioStream->disposition = origAudioStream->disposition;
+-			audioStream->pts.num = origAudioStream->pts.num;
+-			audioStream->pts.den = origAudioStream->pts.den;
+ 
+ 			AVCodecContext * newCtx = audioStream->codec;
+ 
+@@ -660,8 +658,8 @@ int FFMpegVideoEncoderPriv::encodeImage( const QImage &img, qint64 )
+ 	{
+ 		while ( true )
+ 		{
+-			double audio_pts = (double) audioStream->pts.val * av_q2d( audioStream->time_base );
+-			double video_pts = (double) videoStream->pts.val * av_q2d( videoStream->time_base );
++			double audio_pts = (double) av_stream_get_end_pts(audioStream) * av_q2d( audioStream->time_base );
++			double video_pts = (double) av_stream_get_end_pts(videoStream) * av_q2d( videoStream->time_base );
+ 
+ 			//qDebug( "PTS check: A: %g V: %g", audio_pts, video_pts );
+ 
+@@ -856,10 +854,10 @@ bool FFMpegVideoEncoderPriv::convertImage_sws(const QImage &img)
+ 	videoConvertCtx = sws_getCachedContext( videoConvertCtx,
+ 										   m_videoformat->width,
+ 										   m_videoformat->height,
+-										   PIX_FMT_BGRA,
++										   AV_PIX_FMT_BGRA,
+ 										   m_videoformat->width,
+ 										   m_videoformat->height,
+-										   PIX_FMT_YUV420P,
++										   AV_PIX_FMT_YUV420P,
+ 										   SWS_BICUBIC,
+ 										   NULL,
+ 										   NULL,

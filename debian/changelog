@@ -2,11 +2,11 @@ karlyriceditor (1.11-2) UNRELEASED; urgency=medium
 
   * Partially unpatch the code because FFmpeg is back in Debian.
   * Patch the source code to make it compile with the upcoming FFmpeg 2.9/3.0.
-    Thanks to Andreas Cadhalpun
+    Thanks to Andreas Cadhalpun (Closes: #803828)
   * Upgraded Standards-Version to 3.9.7 (no changes necessary according to
     upgrading checklist).
 
- -- Martin Steghöfer <martin@steghoefer.eu>  Wed, 09 Mar 2016 17:13:10 +0100
+ -- Martin Steghöfer <martin@steghoefer.eu>  Thu, 10 Mar 2016 16:19:11 +0100
 
 karlyriceditor (1.11-1) unstable; urgency=low
 

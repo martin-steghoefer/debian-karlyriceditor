@@ -4,6 +4,7 @@ Subject: Fix FFmpeg 2.9 compilation
 
 Author: Andreas Cadhalpun <andreas.cadhalpun@googlemail.com>
 Forwarded: https://sourceforge.net/p/karlyriceditor/bugs/17/
+Bug-Debian: http://bugs.debian.org/803828
 
 Patch to make Karlyriceditor compile/work with the upcoming 2.9/3.0 FFmpeg
 release.

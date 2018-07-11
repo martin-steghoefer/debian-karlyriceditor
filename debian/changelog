@@ -1,3 +1,11 @@
+karlyriceditor (1.11-2.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Fix build with ffmpeg 4.0. Thanks to James cowgill for the patch. (Closes:
+    #888377)
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Wed, 11 Jul 2018 22:24:38 +0200
+
 karlyriceditor (1.11-2) unstable; urgency=medium
 
   * Partially unpatch the code because FFmpeg is back in Debian.

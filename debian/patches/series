@@ -8,3 +8,4 @@
 0008-Fix-segfault-AVFrame-initialization-Libav-FFmpeg.patch
 0010-Make-qmake-respect-external-build-linking-flags.patch
 ffmpeg2.9.patch
+ffmpeg4.0.patch
